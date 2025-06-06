@@ -21,7 +21,8 @@ if name_on_smoothie:
     st.write("The name on smoothie is", name_on_smoothie)
 else:
     st.write("Enter name on smoothie")
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON')
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
+
 st.dataframe(data=my_dataframe, use_container_width=True)
 st.stop()
 incredients_list=st.multiselect('Choose upto 5 incredients: ',
