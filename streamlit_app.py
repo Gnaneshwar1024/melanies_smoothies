@@ -32,10 +32,14 @@ incredients_string=''
 if incredients_list:
     for incredients in incredients_list:
         incredients_string += incredients + ' '
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+# st.text(smoothiefroot_response.json())
+        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width = True)
     st.write('You have selected '+incredients_string)
     my_insert_stmt = """insert into orders(ingredients, name_on_order) values ('"""+ incredients_string+"""','"""+name_on_smoothie+"""')"""
     # st.write(my_insert_stmt)
     time_to_insert = st.button('Submit Order')
+    
     if time_to_insert:
         try:
             session.sql(my_insert_stmt).collect()
