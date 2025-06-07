@@ -23,8 +23,9 @@ else:
     st.write("Enter name on smoothie")
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
 
-st.dataframe(data=my_dataframe, use_container_width=True)
-st.stop()
+# st.dataframe(data=my_dataframe, use_container_width=True)
+# st.stop()
+pd_df = my_dataframe.to_pandas()
 incredients_list=st.multiselect('Choose upto 5 incredients: ',
                                my_dataframe, max_selections=5)
 
@@ -35,6 +36,8 @@ incredients_string=''
 if incredients_list:
     for incredients in incredients_list:
         incredients_string += incredients + ' '
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == incredients, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', incredients,' is ', search_on, '.')
         st.subheader(incredients+' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/"+incredients)
 # st.text(smoothiefroot_response.json())
